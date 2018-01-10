@@ -1,6 +1,8 @@
 ## 依赖包
 + django 1.8.3
 + pymysql
++ redis
++ django-cors-headers
 
 ## 数据库初始化
 
@@ -53,3 +55,15 @@
   python manage.py syncdb
   ```
   + 在进行上一步的时候控制台不报错就可以
+
+## 登录相关
++ 使用Token的方式与前端进行交互，登录的时候，根据用户名、密码和设定的字符生成Token
++ 将Token存储在Redis数据库中，存储格式如下
+   ```
+   {
+       'acnf4655$kkkk': (token){
+           "user_name": 'zhangsan',
+           "user_type": 0/1,
+        } 
+   }
+   ```
