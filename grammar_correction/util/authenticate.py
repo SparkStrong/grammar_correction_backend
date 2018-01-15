@@ -8,7 +8,11 @@ from grammar_correction.util import config
 def gen_token(user_name, password):
     dump_str = user_name + password
     s = Serializer(secret_key=config.SECRET_KEY, salt=config.AUTH_SALT)
-    return s.dumps(dump_str)
+    token = s.dumps(dump_str)
+    # print("token type: ", type(token))
+    token_str = str(token)
+    # print(type(token_str))
+    return token_str
 
 
 def verify_auth_token(token):

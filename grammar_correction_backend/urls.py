@@ -20,5 +20,6 @@ from grammar_correction import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/login/$', views.login),
     url(r'^api/grammar/correct/$', views.correct_grammatical_mistake),
 ]

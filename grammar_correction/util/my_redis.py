@@ -58,3 +58,7 @@ class Redis(object):
         except:
             print("Exception in delete token from redis!")
             return -1
+
+
+if __name__ == '__main__':
+    my_redis = Redis()

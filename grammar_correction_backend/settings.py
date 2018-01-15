@@ -67,7 +67,7 @@ MIDDLEWARE_CLASSES = (
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = {
+CORS_ALLOW_HEADERS = (
     'accept',
     'accept-encoding',
     'authorization',
@@ -78,7 +78,7 @@ CORS_ALLOW_HEADERS = {
     'x-csrftoken',
     'x-requested-with',
     'Access-Token',
-}
+)
 
 
 ROOT_URLCONF = 'grammar_correction_backend.urls'
