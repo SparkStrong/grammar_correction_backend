@@ -67,3 +67,7 @@
         } 
    }
    ```
+ 
+ ## redis数据库
+ + 启动服务端 `redis-server.exe redis.windows.conf // 指定config文件`
+ + 客户端连接服务端 `redis-cli.exe -h 127.0.0.1 -p 6379`

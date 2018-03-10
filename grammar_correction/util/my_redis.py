@@ -59,6 +59,17 @@ class Redis(object):
             print("Exception in delete token from redis!")
             return -1
 
+    def get_data(self, token):
+        """
+        根据token值获取相应的value，包括user_name和user_type
+        :param token: key
+        :return: value
+        """
+        value = self.redis_conn.get(token)
+        data = simplejson.loads(value)
+
+        return data
+
 
 if __name__ == '__main__':
     my_redis = Redis()

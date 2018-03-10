@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 
-from grammar_correction.models import User
+from grammar_correction.models import User, FeedbackResult
 from grammar_correction.util import authenticate
 
 # Create your views here.
@@ -126,3 +126,27 @@ def correct_grammatical_mistake(request):
     # response['Access-Control-Allow-Origin'] = '*'
 
     return response
+
+def gc_correct_suggest(request):
+    if not verify_logged_in(request):  # 未登录
+        return HttpResponse(json.dumps({"code": 1}, ensure_ascii=False))
+
+    data = simplejson.loads(request.body)
+    print("suggest data = {}".format(data))
+
+    token = request.META.get("HTTP_ACCESS_TOKEN")
+    print("token = {}".format(token))
+    user_data = redis.get_data(token=token)
+    print("user_data = {}".format(user_data))
+    print(type(user_data))
+    user_name = user_data["user_name"]
+    print("user_name = {}".format(user_name))
+
+    db = FeedbackResult(user_name=user_name, original_text=data["gcSource"],
+                        system_correction_result=data["gcRes"],
+                        user_correction_suggestion=data["gcResSugg"])
+    db.save()
+
+    result = {'code': 0}
+
+    return HttpResponse(json.dumps(result, ensure_ascii=False))
