@@ -10,6 +10,8 @@ import simplejson
 
 from gingerit.gingerit import GingerIt
 from grammar_correction.util.my_redis import Redis
+from grammar_correction.rpc_model.client import client
+from grammar_correction.util import ngram
 
 redis = Redis()
 
@@ -113,14 +115,16 @@ def correct_grammatical_mistake(request):
     data = simplejson.loads(request.body)
     text = data['gcSource']
 
-    # parser = GingerIt()
-    # gc_res = parser.parse(text)
+    parser = GingerIt()
+    gc_res = parser.parse(text)
+
+    #correct_res = client.rpc_correct(src=text)
 
     result = {}
     result['code'] = 0
     result['data'] = {}
-    # result['data']['gcResult'] = gc_res["result"]
-    result['data']['gcResult'] = text
+    result['data']['gcResult'] = gc_res["result"]
+    #result['data']['gcResult'] = correct_res
 
     response = HttpResponse(json.dumps(result, ensure_ascii=False))
     # response['Access-Control-Allow-Origin'] = '*'
@@ -142,10 +146,16 @@ def gc_correct_suggest(request):
     user_name = user_data["user_name"]
     print("user_name = {}".format(user_name))
 
-    db = FeedbackResult(user_name=user_name, original_text=data["gcSource"],
+    prob_gcres = ngram.caculate_probability(data["gcRes"])
+    prob_gcsugg = ngram.caculate_probability(data["gcResSugg"])
+
+    print("prob_gcres = {},  prob_gcsugg = {}".format(prob_gcres, prob_gcsugg))
+
+    if prob_gcsugg > prob_gcres:
+        db = FeedbackResult(user_name=user_name, original_text=data["gcSource"],
                         system_correction_result=data["gcRes"],
                         user_correction_suggestion=data["gcResSugg"])
-    db.save()
+        db.save()
 
     result = {'code': 0}
 

@@ -1,0 +1,16 @@
+[19/Apr/2018 13:44:16]"POST /api/login/ HTTP/1.1" 200 182
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 19, 2018 - 13:44:14
+Django version 1.8.3, using settings 'grammar_correction_backend.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Success to add token data to redis!
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 21, 2018 - 01:41:21
+Django version 1.8.3, using settings 'grammar_correction_backend.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
